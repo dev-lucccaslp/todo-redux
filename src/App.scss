@@ -199,7 +199,35 @@
 
                 .whiteBg {
                     background-color: white;
-                    
+                    color: black;
+
+                    .clear {
+                        &:hover {
+                            color: #ccc;
+                        }
+
+                        &.active {
+                            color: rgb(41, 41, 238);
+                        }
+                    }
+                }
+
+                .types {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                .clear {
+                    cursor: pointer;
+
+                    &:hover {
+                        color: white;
+                    }
+                    &.active {
+                        color: rgb(41, 41, 238)
+                    }
                 }
             }
         }
