@@ -29,22 +29,16 @@ const inputRef = useRef()
                 <p>0 items a esquerda</p>
 
                 <div className="types">
-                <div className="types">
-                    <p className='clear'>
-                        Todos
-                    </p>
+                    <div className="types">
+                        <p className='clear'>Todos</p>
 
-                    <p className='clear'>
-                        Ativo
-                    </p>
+                        <p className='clear'>Ativo</p>
 
-                    <p className='clear'>
-                        Concluido
-                    </p>
+                        <p className='clear'>Concluido</p>
                     </div>
 
-                    <p className='clear'>Limpeza completada</p>
                 </div>
+                <p className='clear'>Limpeza completada</p>
             </div>
         </div>
     </div>
