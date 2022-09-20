@@ -4,14 +4,85 @@ import sunIcon from './images/icon-sun.svg';
 
 import Todo from './Todo';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
 import { selectDarkMode, toggleTheme } from './features/slices/themeSlice';
 
+import {
+   addTodo, 
+   clearCompleted,
+   selectActiveTodos,
+   selectCompletedTodos,
+   selectShowActiveTodos,
+   selectShowCompletedTodos,
+   selectShowTodos,
+   selectTodos,
+} from './features/slices/todosSlice';
+
+import {showCompletedFunction} from './features/slices/todosSlice';
+import {showAllFunction} from './features/slices/todosSlice';
+import {showActiveFunction} from './features/slices/todosSlice';
+ 
 function Todos() {
 const inputRef = useRef();
 
 const darkMode = useSelector(selectDarkMode);
 const dispatch = useDispatch();
+
+const todos = useSelector(selectTodos)
+const completedTodos = useSelector(selectCompletedTodos)
+const activeTodos =  useSelector(selectActiveTodos)
+
+const showTodos =  useSelector(selectShowTodos)
+const showActiveTodos =  useSelector(selectShowActiveTodos)
+const showCompletedTodos =  useSelector(selectShowCompletedTodos)
+
+let todosToRender;
+let activeTodosNumber = 0;
+
+const submitTodo = (e) => {
+    e.preventDefault();
+
+    if(inputRef.current.value.trim()) {
+        dispatch(addTodo({
+            id: Math.random() * 1000,
+            content: inputRef.current.value,
+        }))
+    }
+
+    inputRef.current.value = ""
+}
+
+const showCompletedHandler = () => {
+    dispatch(showCompletedFunction())
+}
+
+const showAllHandler = () => {
+    dispatch(showAllFunction())
+}
+
+const showActiveHandler = () => {
+    dispatch(showActiveFunction())
+}
+
+const clearCompletedHandler = () => {
+    dispatch(clearCompleted())
+}
+
+if (showActiveTodos) {
+    todosToRender = activeTodos;
+} else if(showCompletedTodos) {
+    todosToRender = completedTodos;
+} else { 
+    todosToRender= todos;
+}
+
+todos?.forEach((todosToRender) =>{
+    if(!todos.completed) {
+        activeTodosNumber++;
+    }
+})
 
   return (
     <div className='todos'>
@@ -26,7 +97,7 @@ const dispatch = useDispatch();
 
         <div className="input_container">
             <div className="circle"></div>
-            <form>
+            <form onSubmit={submitTodo}>
                 <input 
                     type="text" ref={inputRef} 
                     placeholder="Crie uma nova tarefa..."
@@ -37,22 +108,29 @@ const dispatch = useDispatch();
         </div>
 
         <div className={`todos_container ${!darkMode ? "whiteBg" : ""}`}>
-            <Todo />
+            {todosToRender.map((todo) => (
+                <Todo 
+                    content={ todo.content }
+                    key = { todo.id }
+                    id= { todo.id }
+                    completed= {todo.completed}
+                />
+            ))}
 
             <div className={`todos_footer ${!darkMode ? "whiteBg" : ""}`}>
-                <p>0 items a esquerda</p>
+                <p>{activeTodosNumber} items a esquerda</p>
 
                 <div className="types">
                     <div className="types">
-                        <p className='clear'>Todos</p>
+                        <p className={`clear ${showTodos ? "active" : ""}`} onClick={showAllHandler}>Todos</p>
 
-                        <p className='clear'>Ativo</p>
+                        <p className={`clear ${showActiveTodos ? "active" : ""}`} onClick={showActiveHandler}>Ativo</p>
 
-                        <p className='clear'>Concluido</p>
+                        <p className={`clear ${showCompletedTodos ? "active" : ""}` } onClick={showCompletedHandler} >Concluido</p>
                     </div>
 
                 </div>
-                <p className='clear'>Limpeza completada</p>
+                <p className='clear' onClick={clearCompletedHandler}>Remover concluidos</p>
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@ export const todosSlice = createSlice({
     completedTodos: [],
     activeTodos:[],
     showTodos: true,
-    showCompletedTodos: true,
+    showCompletedTodos: false,
     showActiveTodos: false,
   },
 
@@ -77,11 +77,19 @@ export const {
   addTodo, 
   completeTodo, 
   removeTodo, 
-  showCompletedFunction, 
+  showCompletedFunction,
+  showAllFunction,
   showActiveFunction, 
+  showActiveTodos, 
   clearCompleted
 } = todosSlice.actions;
 
-export const selectCount = (state) => state.counter.value;
+export const selectTodos = (state) => state.todos.todos;
+export const selectCompletedTodos = (state) => state.todos.completedTodos;
+export const selectActiveTodos = (state) => state.todos.showTodos;
+
+export const selectShowTodos = (state) => state.todos.todos;
+export const selectShowActiveTodos = (state) => state.todos.showActiveTodos;
+export const selectShowCompletedTodos = (state) => state.todos.showCompetedTodos;
 
 export default todosSlice.reducer;
