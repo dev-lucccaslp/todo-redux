@@ -1,26 +1,87 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const todosSlice = createSlice({
+  name: 'todos',
   initialState:{
     todos: [],
+    completedTodos: [],
+    activeTodos:[],
+    showTodos: true,
+    showCompletedTodos: true,
+    showActiveTodos: false,
   },
 
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    addTodo: (state, action) => {
+      state.todos.push(action.payload)
     },
-    decrement: (state) => {
-      state.value -= 1;
+    completeTodo: (state,action) => {
+      state.todos.forEach((todo) => {
+        if (todo.id === action.payload){
+          todo.completed = !todo.completed
+        }
+      })
     },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
+
+    removeTodo: (state, action) => {
+      state.todos =  state.todos.filter((todo) => todo.id !== action.payload);
+
+      if (state.completedTodos.findIndex((todo) => todo.id === action.payload) !== -1) {
+        state.completedTodos = state.completedTodos.filter(
+          (todo) => todo.id !== action.payload
+          );
+      }
+
+      if(
+        state.activeTodos.findIndex((todo) => todo.id === action.payload) !== -1
+        ) {
+        state.activeTodos = state.activeTodos.filter(
+          (todo) => todo.id !== action.payload
+          );
+      }
     },
+    showAllFunction :(state) => {
+      state.showTodos = true;
+      state.showActiveTodos = false;
+      state.showCompletedTodos = false;
+    },
+    showActiveFunction : (state) => {
+      const activeTodos = state.todos.filter((todo) => !todo.completed);
+
+      state.activeTodos = activeTodos;
+
+      state.showTodos = false;
+      state.showActiveTodos = true;
+      state.showCompletedTodos = true;
+    },
+
+    showCompletedFunction: (state) => {
+      const completedTodos = state.todos.filter((todo) => todo.completed);
+
+      state.completedTodos = completedTodos;
+
+      state.showTodos = false;
+      state.showActiveTodos = false;
+      state.showCompletedTodos = true;
+    },
+
+    clearCompleted: (state) => {
+      state.completedTodos =[];
+      state.todos = state.todos.filter((todo) => !todo.completed)
+    }
+    
   },
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { 
+  addTodo, 
+  completeTodo, 
+  removeTodo, 
+  showCompletedFunction, 
+  showActiveFunction, 
+  clearCompleted
+} = todosSlice.actions;
 
 export const selectCount = (state) => state.counter.value;
 
-export default counterSlice.reducer;
+export default todosSlice.reducer;
