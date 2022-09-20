@@ -16,7 +16,7 @@ function Todo({ content, completed, id }) {
   const darkMode = useSelector(selectDarkMode);
   const dispatch = useDispatch()
 
-  const completedTodoHandler = () => {
+  const completeTodoHandler = () => {
     dispatch(completeTodo(id))
   }
 
@@ -26,7 +26,7 @@ function Todo({ content, completed, id }) {
 
 
   return (
-    <div className='todo_container' onClick={completedTodoHandler}>
+    <div className='todo_container' onClick={completeTodoHandler}>
         <div className={`circle ${completed ? 'active' : ""}`}>
             <img src={checkIcon} alt="check icon" srcset="" />
         </div>

@@ -86,9 +86,9 @@ export const {
 
 export const selectTodos = (state) => state.todos.todos;
 export const selectCompletedTodos = (state) => state.todos.completedTodos;
-export const selectActiveTodos = (state) => state.todos.showTodos;
+export const selectActiveTodos = (state) => state.todos.activeTodos;
 
-export const selectShowTodos = (state) => state.todos.todos;
+export const selectShowTodos = (state) => state.todos.showTodos;
 export const selectShowActiveTodos = (state) => state.todos.showActiveTodos;
 export const selectShowCompletedTodos = (state) => state.todos.showCompetedTodos;
 

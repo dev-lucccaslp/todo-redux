@@ -124,9 +124,9 @@ todos?.forEach((todosToRender) =>{
                     <div className="types">
                         <p className={`clear ${showTodos ? "active" : ""}`} onClick={showAllHandler}>Todos</p>
 
-                        <p className={`clear ${showActiveTodos ? "active" : ""}`} onClick={showActiveHandler}>Ativo</p>
+                        <p className={`clear ${showActiveTodos ? "active" : ""}`} onClick={showActiveHandler}>Ativo(s)</p>
 
-                        <p className={`clear ${showCompletedTodos ? "active" : ""}` } onClick={showCompletedHandler} >Concluido</p>
+                        <p className={`clear ${showCompletedTodos ? "active" : ""}` } onClick={showCompletedHandler} >Concluido(s)</p>
                     </div>
 
                 </div>
