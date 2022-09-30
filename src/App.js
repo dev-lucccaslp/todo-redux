@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { selectDarkMode } from './features/slices/themeSlice';
 
+import { Save } from './hooks/useTheme'
+
 import './App.scss';
 
 import Todos from './Todos'
